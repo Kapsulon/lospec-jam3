@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3103sit7p6q2"]
+
+[ext_resource type="Script" path="res://src/main.gd" id="1_gnvqc"]
+[ext_resource type="Shader" path="res://src/shaders/palette_clamp.gdshader" id="2_mqpfw"]
+[ext_resource type="Texture2D" uid="uid://5uyqxmt5igow" path="res://assets/cursor.png" id="2_tuyn5"]
+[ext_resource type="Script" path="res://src/ui/touch_cursor.gd" id="3_ct5n6"]
+[ext_resource type="Texture2D" uid="uid://br4vp2adh2gbr" path="res://assets/eroge-48-1x.png" id="3_phg0s"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tufg6"]
+font_size = 8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5iwj5"]
+shader = ExtResource("2_mqpfw")
+shader_parameter/palette = ExtResource("3_phg0s")
+
+[node name="Main" type="Node"]
+script = ExtResource("1_gnvqc")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Info:"
+
+[node name="Info" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(224, 96)
+layout_mode = 2
+text = "- The default input action is named \"touch\" and can read either touch or mouse input.
+- The project uses Godot 4.3rc1 for pixel-art improvements (cameras should be smoother).
+- The window resizes smoothly and keeps to the jam restrictions."
+label_settings = SubResource("LabelSettings_tufg6")
+autowrap_mode = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TouchCursor" type="Sprite2D" parent="UI"]
+visible = false
+texture = ExtResource("2_tuyn5")
+script = ExtResource("3_ct5n6")
+
+[node name="PaletteClamp" type="ColorRect" parent="UI"]
+material = SubResource("ShaderMaterial_5iwj5")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true
