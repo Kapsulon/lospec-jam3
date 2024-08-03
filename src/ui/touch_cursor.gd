@@ -7,19 +7,19 @@ extends Sprite2D
 
 
 func _ready() -> void:
-	hide()
-	set_process(false)
+    hide()
+    set_process(false)
 
 
 func _process(_delta: float) -> void:
-	position = get_global_mouse_position()
+    position = get_global_mouse_position()
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("touch"):
-		show()
-		set_process(true)
-	
-	elif event.is_action_released("touch"):
-		hide()
-		set_process(false)
+    if event.is_action_pressed("touch"):
+        show()
+        set_process(true)
+    
+    elif event.is_action_released("touch"):
+        hide()
+        set_process(false)
