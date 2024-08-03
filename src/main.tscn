@@ -1,13 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://d3103sit7p6q2"]
+[gd_scene load_steps=17 format=3 uid="uid://d3103sit7p6q2"]
 
 [ext_resource type="Script" path="res://src/main.gd" id="1_gnvqc"]
 [ext_resource type="Shader" path="res://src/shaders/palette_clamp.gdshader" id="2_mqpfw"]
 [ext_resource type="Texture2D" uid="uid://5uyqxmt5igow" path="res://assets/cursor.png" id="2_tuyn5"]
 [ext_resource type="Script" path="res://src/ui/touch_cursor.gd" id="3_ct5n6"]
 [ext_resource type="Texture2D" uid="uid://br4vp2adh2gbr" path="res://assets/eroge-48-1x.png" id="3_phg0s"]
+[ext_resource type="PackedScene" uid="uid://j1c6bf8xboth" path="res://src/scenes/reel.tscn" id="6_6awto"]
 [ext_resource type="PackedScene" uid="uid://dg1edlw7242vf" path="res://assets/fbx/border.fbx" id="6_e7igq"]
-[ext_resource type="PackedScene" uid="uid://cb77q50tqath8" path="res://assets/fbx/fish.fbx" id="8_i2mb7"]
-[ext_resource type="PackedScene" uid="uid://df1uact2wupp4" path="res://assets/fbx/player.fbx" id="10_8yf2k"]
 [ext_resource type="PackedScene" uid="uid://drngwht4px5be" path="res://assets/fbx/lily.tscn" id="12_a6wka"]
 [ext_resource type="PackedScene" uid="uid://d2s6cr6e0outt" path="res://assets/fbx/bridge.tscn" id="12_hhjvn"]
 [ext_resource type="Shader" uid="uid://bokiwp2ggoptf" path="res://assets/fbx/cloud.tres" id="12_jqgg6"]
@@ -38,6 +37,7 @@ script = ExtResource("1_gnvqc")
 
 [node name="TouchCursor" type="Sprite2D" parent="UI"]
 visible = false
+z_index = 4096
 texture = ExtResource("2_tuyn5")
 script = ExtResource("3_ct5n6")
 
@@ -51,29 +51,149 @@ grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_lock_ = true
 
+[node name="cast" type="Button" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.292969
+anchor_top = 0.631944
+anchor_right = 0.707031
+anchor_bottom = 0.8125
+grow_horizontal = 2
+grow_vertical = 2
+text = "Cast line"
+metadata/_edit_use_anchors_ = true
+
+[node name="Reel" parent="UI" instance=ExtResource("6_6awto")]
+visible = false
+
+[node name="debug_fishing" type="Label" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.0078125
+anchor_top = 0.0138889
+anchor_right = 0.230469
+anchor_bottom = 0.0763889
+theme_override_font_sizes/font_size = 8
+text = "Fishing: false"
+metadata/_edit_use_anchors_ = true
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, -1.6206e-08, 0.982668, 0.185375, 8.59076e-08, 0.185375, -0.982668, -0.249032, 2.13124, 0.591177)
 fov = 70.0
 size = 2.955
 frustum_offset = Vector2(0.105, 0.015)
 
-[node name="fish" parent="." instance=ExtResource("8_i2mb7")]
-transform = Transform3D(-0.694912, 0.00675297, -0.719063, 0.0102494, 0.999948, -0.000514273, 0.719022, -0.00772731, -0.694946, 1.94147, 1.79382, 8.35807)
+[node name="env" type="Node3D" parent="."]
 
-[node name="player" parent="." instance=ExtResource("10_8yf2k")]
-
-[node name="envir" type="Node3D" parent="."]
-
-[node name="border" parent="envir" instance=ExtResource("6_e7igq")]
+[node name="border" parent="env" instance=ExtResource("6_e7igq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0409508, 0.758053, 0.212814)
 
-[node name="boat2" parent="envir" instance=ExtResource("12_risp6")]
+[node name="boat2" parent="env" instance=ExtResource("12_risp6")]
 transform = Transform3D(0.999906, -0.00100892, -0.013711, 0.000978957, 0.999997, -0.00219398, 0.0137132, 0.00218036, 0.999904, 0, 0, 0)
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="envir"]
+[node name="water" type="CSGMesh3D" parent="env"]
 transform = Transform3D(137.648, 0, 0, 0, 4.48181e-06, 68.4229, 0, 102.532, -2.99086e-06, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_p6s44")
 mesh = SubResource("QuadMesh_h82xd")
+
+[node name="lilys" type="Node3D" parent="env"]
+
+[node name="lily" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(-0.471227, 0, 0.882012, 0, 1, 0, -0.882012, 0, -0.471227, 2.26879, 1.90735e-06, 5.08003)
+
+[node name="lily2" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(0.919664, 0, -0.392706, 0, 1, 0, 0.392706, 0, 0.919664, -4.62762, 1.90735e-06, 12.5982)
+
+[node name="lily3" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(0.919664, 0, -0.392706, 0, 1, 0, 0.392706, 0, 0.919664, 9.29023, 1.90735e-06, 20.0495)
+
+[node name="lily4" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(0.919664, 0, -0.392706, 0, 1, 0, 0.392706, 0, 0.919664, 7.29023, 1.90735e-06, 11.0495)
+
+[node name="lily5" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 21)
+
+[node name="lily6" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 8)
+
+[node name="lily7" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 22)
+
+[node name="lily8" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 27)
+
+[node name="lily9" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 25)
+
+[node name="lily10" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 24)
+
+[node name="lily11" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 16)
+
+[node name="lily12" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 10)
+
+[node name="lily13" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 23)
+
+[node name="lily14" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 30)
+
+[node name="lily15" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 23)
+
+[node name="lily16" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 14)
+
+[node name="lily17" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 6)
+
+[node name="lily18" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 7)
+
+[node name="lily19" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 16)
+
+[node name="lily20" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 18)
+
+[node name="lily21" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 13)
+
+[node name="lily22" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 19)
+
+[node name="lily23" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 25)
+
+[node name="lily24" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 33)
+
+[node name="lily25" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 26)
+
+[node name="lily26" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 30)
+
+[node name="lily27" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 29)
+
+[node name="lily28" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 15)
+
+[node name="lily29" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 6)
+
+[node name="lily30" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 0)
+
+[node name="lily31" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
+
+[node name="lily32" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 16)
+
+[node name="lily33" parent="env/lilys" instance=ExtResource("12_a6wka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 24)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.675706, 0.737171, 0, -0.737171, -0.675706, -9.61082, 54.6786, -5.74854)
@@ -87,107 +207,4 @@ gi_mode = 2
 mesh = SubResource("QuadMesh_t3jb2")
 material = SubResource("ShaderMaterial_uada3")
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
-transform = Transform3D(300.777, 0, 0, 0, 300.777, 0, 0, 0, 300.777, 0, 0, 0)
-flip_faces = true
-
-[node name="lilys" type="Node3D" parent="."]
-
-[node name="lily" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(-0.471227, 0, 0.882012, 0, 1, 0, -0.882012, 0, -0.471227, 2.26879, 1.90735e-06, 5.08003)
-
-[node name="lily2" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(0.919664, 0, -0.392706, 0, 1, 0, 0.392706, 0, 0.919664, -4.62762, 1.90735e-06, 12.5982)
-
-[node name="lily3" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(0.919664, 0, -0.392706, 0, 1, 0, 0.392706, 0, 0.919664, 9.29023, 1.90735e-06, 20.0495)
-
-[node name="lily4" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(0.919664, 0, -0.392706, 0, 1, 0, 0.392706, 0, 0.919664, 7.29023, 1.90735e-06, 11.0495)
-
-[node name="lily5" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 21)
-
-[node name="lily6" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 8)
-
-[node name="lily7" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 22)
-
-[node name="lily8" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 27)
-
-[node name="lily9" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 25)
-
-[node name="lily10" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 24)
-
-[node name="lily11" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 16)
-
-[node name="lily12" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 10)
-
-[node name="lily13" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 23)
-
-[node name="lily14" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 30)
-
-[node name="lily15" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 23)
-
-[node name="lily16" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 14)
-
-[node name="lily17" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 6)
-
-[node name="lily18" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 7)
-
-[node name="lily19" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 16)
-
-[node name="lily20" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 18)
-
-[node name="lily21" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 13)
-
-[node name="lily22" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 19)
-
-[node name="lily23" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 25)
-
-[node name="lily24" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 33)
-
-[node name="lily25" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 26)
-
-[node name="lily26" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 30)
-
-[node name="lily27" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 29)
-
-[node name="lily28" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 15)
-
-[node name="lily29" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 6)
-
-[node name="lily30" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 0)
-
-[node name="lily31" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
-
-[node name="lily32" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 16)
-
-[node name="lily33" parent="lilys" instance=ExtResource("12_a6wka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 24)
+[connection signal="pressed" from="UI/cast" to="." method="_on_cast_pressed"]
