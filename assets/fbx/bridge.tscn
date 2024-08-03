@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2s6cr6e0outt"]
+
+[ext_resource type="PackedScene" uid="uid://mvvnqw645p76" path="res://assets/fbx/bridge.fbx" id="1_oxv03"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_655qo"]
+albedo_color = Color(0.412784, 0.324192, 0.211329, 1)
+
+[node name="bridge" instance=ExtResource("1_oxv03")]
+
+[node name="bridge" parent="group1" index="0"]
+material_override = SubResource("StandardMaterial3D_655qo")

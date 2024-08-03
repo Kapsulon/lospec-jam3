@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://drngwht4px5be"]
+
+[ext_resource type="PackedScene" uid="uid://cgd8h24fkx62e" path="res://assets/fbx/lily.fbx" id="1_bs2ea"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ee3k"]
+albedo_color = Color(0.0655705, 0.445962, 0.0476898, 1)
+
+[node name="lily" instance=ExtResource("1_bs2ea")]
+
+[node name="lilypad" parent="group1" index="0"]
+material_override = SubResource("StandardMaterial3D_0ee3k")

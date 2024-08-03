@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c10s4rp3p7mv4"]
+
+[ext_resource type="PackedScene" uid="uid://cvdqlpem002ka" path="res://assets/fbx/water.fbx" id="1_pqgcv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8cpnh"]
+albedo_color = Color(0.152941, 0.403922, 1, 1)
+
+[node name="water" instance=ExtResource("1_pqgcv")]
+
+[node name="water" parent="group1" index="0"]
+material_override = SubResource("StandardMaterial3D_8cpnh")

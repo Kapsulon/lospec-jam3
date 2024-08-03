@@ -1,0 +1,80 @@
+[gd_scene load_steps=6 format=3 uid="uid://cg5xdels7uu14"]
+
+[ext_resource type="PackedScene" uid="uid://beq7vxjlqxrv5" path="res://assets/fbx/boat.fbx" id="1_t5aqw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ep7oc"]
+albedo_color = Color(0.467448, 0.350081, 0.266417, 1)
+
+[sub_resource type="Animation" id="Animation_p821u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("boat:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("boat:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.601714, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_w7v1v"]
+resource_name = "Take 001"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("boat:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.0261799), Vector3(2.73078e-09, 0, -5.46156e-09), Vector3(0, 0, -0.0261799), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("boat:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.601714, 0), Vector3(0, 0.497816, 0), Vector3(0, 0.601714, 0), Vector3(0, 0.498, 0), Vector3(0, 0.601714, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h2b2g"]
+_data = {
+"RESET": SubResource("Animation_p821u"),
+"Take 001": SubResource("Animation_w7v1v")
+}
+
+[node name="boat" instance=ExtResource("1_t5aqw")]
+
+[node name="boat" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.601714, 0)
+material_override = SubResource("StandardMaterial3D_ep7oc")
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_h2b2g")
+}
+autoplay = "Take 001"
